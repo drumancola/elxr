@@ -33,74 +33,69 @@
   a{color:inherit; text-decoration:none;}
   img{max-width:100%; display:block;}
 
-  /* ---------- torn edge divider (signature element) ---------- */
-  .torn{
-    height:26px;
-    width:100%;
-    background:var(--ink);
-    clip-path: polygon(
-      0% 0%, 3% 100%, 6% 20%, 9% 100%, 12% 15%, 15% 100%, 18% 25%, 21% 100%,
-      24% 10%, 27% 100%, 30% 30%, 33% 100%, 36% 5%, 39% 100%, 42% 20%, 45% 100%,
-      48% 15%, 51% 100%, 54% 25%, 57% 100%, 60% 10%, 63% 100%, 66% 30%, 69% 100%,
-      72% 5%, 75% 100%, 78% 20%, 81% 100%, 84% 15%, 87% 100%, 90% 25%, 93% 100%,
-      96% 10%, 100% 100%, 100% 0%
-    );
-  }
-  .torn.up{transform:rotate(180deg);}
-  .torn.violet{background:var(--violet);}
-  .torn.teal{background:var(--teal);}
-  .torn.paper{background:var(--paper);}
-
   /* ---------- nav ---------- */
   header{
+    --nav-fg:var(--paper);
+    --nav-accent:var(--teal);
     position:fixed; top:0; left:0; right:0; z-index:50;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:22px 5vw;
-    background:linear-gradient(to bottom, rgba(12,11,10,0.85), transparent);
+    display:flex; align-items:center; justify-content:flex-start;
+    padding:18px 5vw;
+    background:rgba(12,11,10,0.88);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    color:var(--nav-fg);
+    transition:background 0.25s, color 0.25s, border-color 0.25s;
   }
-  .logo{font-family:'Bebas Neue'; font-size:1.6rem; letter-spacing:0.08em;}
-  nav ul{display:flex; gap:26px; list-style:none;}
+  header.on-light{
+    --nav-fg:var(--ink);
+    --nav-accent:var(--violet);
+    background:rgba(255,255,255,0.88);
+    border-bottom-color:rgba(12,11,10,0.08);
+  }
+  nav{max-width:100%; overflow-x:auto; scrollbar-width:none;}
+  nav::-webkit-scrollbar{display:none;}
+  nav ul{display:flex; gap:28px; list-style:none; white-space:nowrap;}
   nav a{
+    display:block; padding:4px 0;
     font-size:0.78rem; text-transform:uppercase; letter-spacing:0.14em;
-    font-weight:600; opacity:0.85; transition:opacity 0.2s, color 0.2s;
+    font-weight:600; opacity:0.7; transition:opacity 0.2s, color 0.2s, border-color 0.2s;
     border-bottom:2px solid transparent;
   }
-  nav a:hover, nav a:focus-visible{opacity:1; color:var(--teal); outline:none;}
-  .nav-toggle{display:none; background:none; border:none; color:var(--paper); font-size:1.6rem; cursor:pointer;}
+  nav a:hover, nav a:focus-visible{opacity:1; color:var(--nav-accent); outline:none;}
+  nav a.active{opacity:1; color:var(--nav-accent); border-bottom-color:var(--nav-accent);}
+  section, .hero{scroll-margin-top:56px;}
 
-  /* ---------- hero ---------- */
+  /* ---------- hero (white landing page) ---------- */
   .hero{
-    position:relative;
+    position:relative; overflow:hidden;
     min-height:100svh;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center;
-    padding:120px 6vw 80px;
-    background:
-      radial-gradient(ellipse at 50% 0%, rgba(121,34,179,0.24), transparent 60%),
-      repeating-linear-gradient(115deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 6px),
-      linear-gradient(180deg, #14100e 0%, #0c0b0a 55%, #0c0b0a 100%);
+    padding:110px 6vw 80px;
+    background:#ffffff;
+    color:var(--ink);
   }
-  .hero::after{
-    content:"";
-    position:absolute; inset:0;
-    background:
-      radial-gradient(circle at 20% 80%, rgba(60,74,86,0.28), transparent 45%),
-      radial-gradient(circle at 85% 20%, rgba(63,169,169,0.20), transparent 40%);
-    pointer-events:none;
+  .hero-graphics{
+    position:absolute; inset:0; width:100%; height:100%;
+    pointer-events:none; z-index:0;
   }
-  .eyebrow{
+  .hero > *:not(.hero-graphics){position:relative; z-index:1;}
+  .hero .sr-only{
+    position:absolute; width:1px; height:1px; overflow:hidden;
+    clip:rect(0 0 0 0); white-space:nowrap;
+  }
+  .hero-logo{
+    width:clamp(190px, 30vw, 300px); height:auto; display:block; margin:0 auto;
+  }
+  .hero .eyebrow{
     font-size:0.78rem; text-transform:uppercase; letter-spacing:0.32em;
-    color:var(--teal); margin-bottom:22px; z-index:1;
+    color:var(--violet); margin:26px 0 0;
   }
-  .hero h1{
-    font-size:clamp(4rem, 14vw, 10rem);
-    z-index:1;
+  .hero .tagline{
+    max-width:520px; margin:22px auto 0; font-size:1.05rem; line-height:1.55;
+    color:rgba(12,11,10,0.75);
   }
-  .hero h1 span{color:var(--violet);}
-  .hero p{
-    max-width:520px; margin:26px auto 0; font-size:1.05rem; opacity:0.8; z-index:1;
-  }
-  .hero-ctas{display:flex; gap:16px; margin-top:38px; z-index:1; flex-wrap:wrap; justify-content:center;}
+  .hero-ctas{display:flex; gap:16px; margin-top:36px; flex-wrap:wrap; justify-content:center;}
 
   .btn{
     display:inline-block; padding:14px 30px;
@@ -108,16 +103,14 @@
     border:2px solid var(--paper); transition:all 0.2s;
   }
   .btn:hover, .btn:focus-visible{background:var(--paper); color:var(--ink); outline:none;}
-  .btn.solid{background:var(--violet); border-color:var(--violet);}
+  .btn.solid{background:var(--violet); border-color:var(--violet); color:var(--paper);}
   .btn.solid:hover{background:transparent; color:var(--paper);}
 
-  .scroll-cue{
-    margin-top:auto; padding-top:28px;
-    font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; opacity:0.6;
-    display:flex; flex-direction:column; align-items:center; gap:8px; z-index:1;
-  }
-  .scroll-cue .stem{width:1px; height:34px; background:var(--paper); opacity:0.5; animation:pulse 2s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:0.15;} 50%{opacity:0.6;}}
+  /* buttons on the white landing page */
+  .hero .btn{border-color:var(--ink); color:var(--ink);}
+  .hero .btn:hover, .hero .btn:focus-visible{background:var(--ink); color:#fff;}
+  .hero .btn.solid{background:var(--violet); border-color:var(--violet); color:#fff;}
+  .hero .btn.solid:hover, .hero .btn.solid:focus-visible{background:#fff; color:var(--violet);}
 
   /* ---------- section shell ---------- */
   section{padding:90px 6vw;}
@@ -134,14 +127,6 @@
   .about .tag{color:var(--teal); font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase;}
   .about h2{font-size:clamp(2.2rem, 5vw, 3.4rem); margin:10px 0 26px;}
   .about p{opacity:0.82; font-size:1.05rem; line-height:1.65; margin-bottom:18px;}
-  .about-facts{
-    display:flex; justify-content:center; gap:0; margin-top:40px; flex-wrap:wrap;
-    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-  }
-  .fact{padding:20px 40px; text-align:center;}
-  .fact + .fact{border-left:1px solid var(--line);}
-  .fact .val{font-family:'Bebas Neue'; font-size:2rem; color:var(--violet);}
-  .fact .lbl{font-size:0.68rem; text-transform:uppercase; letter-spacing:0.14em; opacity:0.6; margin-top:2px;}
 
   /* ---------- listen / music section ---------- */
   .listen{
@@ -278,8 +263,8 @@
   .copyright{font-size:0.75rem; opacity:0.4;}
 
   @media (max-width:900px){
-    nav ul{display:none;}
-    .nav-toggle{display:block;}
+    nav ul{gap:20px;}
+    header{padding:14px 5vw;}
     .listen{grid-template-columns:1fr;}
     .listen-copy{padding:36px 34px 44px;}
     .band-grid{grid-template-columns:1fr; max-width:360px; margin:0 auto;}
@@ -299,31 +284,55 @@
 </head>
 <body>
 
-<header>
-  <a class="logo" href="#top">ELXR ON STAGE</a>
-  <nav>
+<header id="site-header">
+  <nav aria-label="Main">
     <ul>
+      <li><a href="#home" class="active">Home</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#music">Music</a></li>
       <li><a href="#band">Band</a></li>
       <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#gigs">Gigs</a></li>
+      <li><a href="#gigs">Shows</a></li>
     </ul>
   </nav>
 </header>
 
-<div id="top" class="hero">
+<div id="home" class="hero">
+  <!-- minimal line graphics around the logo -->
+  <svg class="hero-graphics" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
+    <circle cx="600" cy="400" r="300" stroke="#7922b3" stroke-opacity="0.16" stroke-width="1.2"/>
+    <circle cx="600" cy="400" r="440" stroke="#3fa9a9" stroke-opacity="0.18" stroke-width="1.2"/>
+    <circle cx="600" cy="400" r="590" stroke="#0c0b0a" stroke-opacity="0.06" stroke-width="1.2"/>
+    <line x1="60" y1="150" x2="190" y2="150" stroke="#7922b3" stroke-opacity="0.45" stroke-width="2"/>
+    <line x1="60" y1="170" x2="130" y2="170" stroke="#3fa9a9" stroke-opacity="0.6" stroke-width="2"/>
+    <line x1="1010" y1="650" x2="1140" y2="650" stroke="#7922b3" stroke-opacity="0.45" stroke-width="2"/>
+    <line x1="1070" y1="630" x2="1140" y2="630" stroke="#3fa9a9" stroke-opacity="0.6" stroke-width="2"/>
+    <circle cx="1060" cy="140" r="5" fill="#3fa9a9" fill-opacity="0.7"/>
+    <circle cx="140" cy="640" r="5" fill="#7922b3" fill-opacity="0.6"/>
+    <path d="M250 560 l12 0 M256 554 l0 12" stroke="#0c0b0a" stroke-opacity="0.3" stroke-width="1.6"/>
+    <path d="M950 250 l12 0 M956 244 l0 12" stroke="#0c0b0a" stroke-opacity="0.3" stroke-width="1.6"/>
+  </svg>
+
+  <h1 class="sr-only"></h1>
+
+  <!-- LOGO PLACEHOLDER: replace this whole <svg> with <img class="hero-logo" src="your-logo.png" alt="ELXR On Stage logo"> -->
+  <svg class="hero-logo" viewBox="0 0 200 200" role="img" aria-label="ELXR On Stage logo" fill="none">
+    <circle cx="100" cy="100" r="92" stroke="#0c0b0a" stroke-width="3"/>
+    <circle cx="100" cy="100" r="78" stroke="#7922b3" stroke-width="1.5" stroke-dasharray="3 6"/>
+    <rect x="62" y="58" width="76" height="14" fill="#0c0b0a"/>
+    <rect x="62" y="93" width="58" height="14" fill="#7922b3"/>
+    <rect x="62" y="128" width="76" height="14" fill="#0c0b0a"/>
+    <rect x="62" y="58" width="14" height="84" fill="#0c0b0a"/>
+    <circle cx="146" cy="100" r="7" fill="#3fa9a9"/>
+  </svg>
+
   <p class="eyebrow mono">Band · Est. 2026</p>
-  <h1>ELXR<br><span>ON STAGE</span></h1>
-  <p>Three players, one live sound. Original songs built to be played loud and played live — new EP <em>Afterglow</em> out now.</p>
+  <p class="tagline">Three players, one live sound. Original songs built to be played loud and played live — new Single <em>Talking Eye To Eye</em> out now.</p>
   <div class="hero-ctas">
     <a class="btn solid" href="#music">Listen Now</a>
     <a class="btn" href="#gigs">Find a Gig</a>
   </div>
-  <div class="scroll-cue"><span>Scroll</span><span class="stem"></span></div>
 </div>
-
-<div class="torn violet"></div>
 
 <section id="about">
   <div class="about">
@@ -331,15 +340,8 @@
     <h2>About The Band</h2>
     <p>ELXR On Stage started as three friends trading songs in a garage and turned into a band that only plays what it writes. No covers, no filler — just original material built to hold up in a loud room with a live crowd in front of it.</p>
     <p>Since forming, we've spent more nights loading gear in and out of small venues than we can count, and that's exactly how we like it. Afterglow is the first record that captures what we actually sound like live.</p>
-    <div class="about-facts">
-      <div class="fact"><div class="val mono">2026</div><div class="lbl">Formed</div></div>
-      <div class="fact"><div class="val mono">3</div><div class="lbl">Members</div></div>
-      <div class="fact"><div class="val mono">40+</div><div class="lbl">Shows Played</div></div>
-    </div>
   </div>
 </section>
-
-<div class="torn teal"></div>
 
 <section id="music">
   <div class="listen">
@@ -385,8 +387,6 @@
   </div>
 </section>
 
-<div class="torn paper"></div>
-
 <section id="band">
   <div class="section-head">
     <div>
@@ -416,8 +416,6 @@
   </div>
 </section>
 
-<div class="torn paper"></div>
-
 <section id="gallery">
   <div class="section-head">
     <div>
@@ -436,8 +434,6 @@
     <div class="gallery-item"><div class="fill"></div><div class="gallery-caption">On the road</div></div>
   </div>
 </section>
-
-<div class="torn violet"></div>
 
 <section id="gigs">
   <div class="section-head">
@@ -468,8 +464,6 @@
     </div>
   </div>
 </section>
-
-<div class="torn violet up"></div>
 
 <div class="radio">
   <div>
@@ -513,6 +507,58 @@
   </div>
   <p class="copyright mono">© 2026 ELXR On Stage. All rights reserved.</p>
 </footer>
+
+<script>
+  (function(){
+    var header = document.getElementById('site-header');
+    var hero = document.getElementById('home');
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav a[href^="#"]'));
+    var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    var ticking = false;
+    var lastCurrent = -1;
+
+    function update(){
+      var y = window.scrollY || window.pageYOffset;
+      var line = y + window.innerHeight * 0.35;   // section "in view" line
+      var current = 0;
+      targets.forEach(function(t, i){
+        if(t && (t.getBoundingClientRect().top + y) <= line){ current = i; }
+      });
+      // at the very bottom, make sure the last section can win
+      if (window.innerHeight + y >= document.documentElement.scrollHeight - 2){ current = links.length - 1; }
+
+      links.forEach(function(a, i){
+        var on = i === current;
+        a.classList.toggle('active', on);
+        if(on){ a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
+      });
+
+      // white header while it sits over the white landing page, dark everywhere else
+      var overHero = hero.getBoundingClientRect().bottom > header.offsetHeight;
+      header.classList.toggle('on-light', overHero);
+
+      // keep the active link visible in the scrolling nav on small screens
+      if(current !== lastCurrent){
+        lastCurrent = current;
+        var activeLink = links[current];
+        var navEl = activeLink.closest('nav');
+        if(navEl && navEl.scrollWidth > navEl.clientWidth){
+          var delta = activeLink.getBoundingClientRect().left - navEl.getBoundingClientRect().left - 16;
+          navEl.scrollTo({left: navEl.scrollLeft + delta, behavior: 'smooth'});
+        }
+      }
+      ticking = false;
+    }
+
+    function onScroll(){
+      if(!ticking){ window.requestAnimationFrame(update); ticking = true; }
+    }
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
+</script>
 
 </body>
 </html>
