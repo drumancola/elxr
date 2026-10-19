@@ -46,12 +46,6 @@
     color:var(--nav-fg);
     transition:background 0.25s, color 0.25s, border-color 0.25s;
   }
-  header.on-light{
-    --nav-fg:var(--ink);
-    --nav-accent:var(--violet);
-    background:rgba(255,255,255,0.88);
-    border-bottom-color:rgba(12,11,10,0.08);
-  }
   nav{max-width:100%; overflow-x:auto; scrollbar-width:none;}
   nav::-webkit-scrollbar{display:none;}
   nav ul{display:flex; gap:28px; list-style:none; white-space:nowrap;}
@@ -65,38 +59,27 @@
   nav a.active{opacity:1; color:var(--nav-accent); border-bottom-color:var(--nav-accent);}
   section, .hero{scroll-margin-top:56px;}
 
-  /* ---------- hero (white landing page) ---------- */
-  .hero{
-    position:relative; overflow:hidden;
-    min-height:100svh;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center;
-    padding:110px 6vw 80px;
-    background:#ffffff;
-    color:var(--ink);
-  }
-  .hero-graphics{
-    position:absolute; inset:0; width:100%; height:100%;
-    pointer-events:none; z-index:0;
-  }
-  .hero > *:not(.hero-graphics){position:relative; z-index:1;}
-  .hero .sr-only{
-    position:absolute; width:1px; height:1px; overflow:hidden;
-    clip:rect(0 0 0 0); white-space:nowrap;
-  }
-  .hero-logo{
-    width:clamp(190px, 30vw, 300px); height:auto; display:block; margin:0 auto;
-  }
-  .hero .eyebrow{
-    font-size:0.78rem; text-transform:uppercase; letter-spacing:0.32em;
-    color:var(--violet); margin:26px 0 0;
-  }
-  .hero .tagline{
-    max-width:520px; margin:22px auto 0; font-size:1.05rem; line-height:1.55;
-    color:rgba(12,11,10,0.75);
-  }
-  .hero-ctas{display:flex; gap:16px; margin-top:36px; flex-wrap:wrap; justify-content:center;}
-
+  /* ---------- hero ---------- */
+ .hero{
+  position:relative; overflow:hidden;
+  min-height:100svh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding:110px 6vw 80px;
+  background:
+    linear-gradient(rgba(12,11,10,0.45), rgba(12,11,10,0.75)),
+    url('assets/1000276586.jpg') center / cover no-repeat;
+  color:var(--paper);
+}
+.hero-title{font-size:clamp(3.5rem, 12vw, 8rem);}
+.hero .eyebrow{
+  font-size:0.78rem; text-transform:uppercase; letter-spacing:0.32em;
+  color:var(--teal); margin:22px 0 0;
+}
+.hero .tagline{
+  max-width:520px; margin:22px auto 0; font-size:1.05rem; line-height:1.55;
+  color:rgba(233,227,214,0.9);
+}
   .btn{
     display:inline-block; padding:14px 30px;
     font-size:0.8rem; text-transform:uppercase; letter-spacing:0.16em; font-weight:700;
@@ -105,12 +88,6 @@
   .btn:hover, .btn:focus-visible{background:var(--paper); color:var(--ink); outline:none;}
   .btn.solid{background:var(--violet); border-color:var(--violet); color:var(--paper);}
   .btn.solid:hover{background:transparent; color:var(--paper);}
-
-  /* buttons on the white landing page */
-  .hero .btn{border-color:var(--ink); color:var(--ink);}
-  .hero .btn:hover, .hero .btn:focus-visible{background:var(--ink); color:#fff;}
-  .hero .btn.solid{background:var(--violet); border-color:var(--violet); color:#fff;}
-  .hero .btn.solid:hover, .hero .btn.solid:focus-visible{background:#fff; color:var(--violet);}
 
   /* ---------- section shell ---------- */
   section{padding:90px 6vw;}
@@ -134,16 +111,22 @@
     background:linear-gradient(135deg, #171018, #0c0b0a);
     border:1px solid var(--line);
   }
-  .listen-art{
-    aspect-ratio:1; width:100%; max-height:100%; background:
-      repeating-linear-gradient(45deg, #23172c, #23172c 12px, #1b1220 12px, #1b1220 24px);
-    position:relative; overflow:hidden;
+  .listen-art{aspect-ratio:1; width:100%; object-fit:cover;}
+  .listen-media{min-width:0;}
+  .player{margin-top:16px;}
+  .player-controls{display:flex; justify-content:center; gap:12px;}
+  .player-controls button{
+    min-width:64px; padding:10px 14px; border:1px solid var(--line);
+    background:transparent; color:var(--paper); font:inherit; font-size:0.75rem;
+    text-transform:uppercase; letter-spacing:0.08em; cursor:pointer;
+    transition:border-color 0.2s, color 0.2s, background 0.2s;
   }
-  .listen-art::before{
-    content:"EP"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    font-family:'Bebas Neue'; font-size:5rem; color:rgba(233,227,214,0.12); letter-spacing:0.1em;
-    white-space:nowrap;
-  }
+  .player-controls button:hover,
+  .player-controls button:focus-visible{border-color:var(--teal); color:var(--teal); outline:none;}
+  .player-controls button#player-toggle{background:var(--violet); border-color:var(--violet); color:var(--paper);}
+  .player-controls button#player-toggle:hover,
+  .player-controls button#player-toggle:focus-visible{background:transparent; color:var(--paper);}
+  .player-status{margin-top:10px; text-align:center; font-size:0.8rem; opacity:0.7;}
   .listen-copy{padding:50px 50px 50px 0;}
   .listen-copy .tag{color:var(--teal); font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase;}
   .listen-copy h3{font-size:clamp(2.2rem, 5vw, 3.2rem); margin:10px 0 16px;}
@@ -162,7 +145,16 @@
   .track:hover .track-num{background:var(--violet); color:var(--paper);}
   .track-name{font-weight:600;}
   .track-sub{font-size:0.82rem; opacity:0.6;}
-  .track-time{font-size:0.8rem; opacity:0.6;}
+  .track-status{font-size:0.72rem; text-transform:uppercase; opacity:0.6;}
+.track-status.out{color:var(--teal); opacity:1;}
+
+.track-link{color:inherit; cursor:pointer; transition:background 0.2s;}
+.track-link .track-num{background:var(--violet); color:var(--paper);}
+.track-link:hover,
+.track-link:focus-visible{background:rgba(233,227,214,0.06); outline:2px solid var(--teal); outline-offset:2px;}
+
+.track.soon{opacity:0.45; cursor:default;}
+.track.soon:hover .track-num{background:transparent; color:var(--teal);}
 
   .platforms{display:flex; gap:12px; flex-wrap:wrap;}
   .platform-btn{
@@ -298,33 +290,7 @@
 </header>
 
 <div id="home" class="hero">
-  <!-- minimal line graphics around the logo -->
-  <svg class="hero-graphics" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
-    <circle cx="600" cy="400" r="300" stroke="#7922b3" stroke-opacity="0.16" stroke-width="1.2"/>
-    <circle cx="600" cy="400" r="440" stroke="#3fa9a9" stroke-opacity="0.18" stroke-width="1.2"/>
-    <circle cx="600" cy="400" r="590" stroke="#0c0b0a" stroke-opacity="0.06" stroke-width="1.2"/>
-    <line x1="60" y1="150" x2="190" y2="150" stroke="#7922b3" stroke-opacity="0.45" stroke-width="2"/>
-    <line x1="60" y1="170" x2="130" y2="170" stroke="#3fa9a9" stroke-opacity="0.6" stroke-width="2"/>
-    <line x1="1010" y1="650" x2="1140" y2="650" stroke="#7922b3" stroke-opacity="0.45" stroke-width="2"/>
-    <line x1="1070" y1="630" x2="1140" y2="630" stroke="#3fa9a9" stroke-opacity="0.6" stroke-width="2"/>
-    <circle cx="1060" cy="140" r="5" fill="#3fa9a9" fill-opacity="0.7"/>
-    <circle cx="140" cy="640" r="5" fill="#7922b3" fill-opacity="0.6"/>
-    <path d="M250 560 l12 0 M256 554 l0 12" stroke="#0c0b0a" stroke-opacity="0.3" stroke-width="1.6"/>
-    <path d="M950 250 l12 0 M956 244 l0 12" stroke="#0c0b0a" stroke-opacity="0.3" stroke-width="1.6"/>
-  </svg>
-
-  <h1 class="sr-only"></h1>
-
-  <!-- LOGO PLACEHOLDER: replace this whole <svg> with <img class="hero-logo" src="your-logo.png" alt="ELXR On Stage logo"> -->
-  <svg class="hero-logo" viewBox="0 0 200 200" role="img" aria-label="ELXR On Stage logo" fill="none">
-    <circle cx="100" cy="100" r="92" stroke="#0c0b0a" stroke-width="3"/>
-    <circle cx="100" cy="100" r="78" stroke="#7922b3" stroke-width="1.5" stroke-dasharray="3 6"/>
-    <rect x="62" y="58" width="76" height="14" fill="#0c0b0a"/>
-    <rect x="62" y="93" width="58" height="14" fill="#7922b3"/>
-    <rect x="62" y="128" width="76" height="14" fill="#0c0b0a"/>
-    <rect x="62" y="58" width="14" height="84" fill="#0c0b0a"/>
-    <circle cx="146" cy="100" r="7" fill="#3fa9a9"/>
-  </svg>
+  <h1 class="hero-title">ELXR On Stage</h1>
 
   <p class="eyebrow mono">Band · Est. 2026</p>
   <p class="tagline">Three players, one live sound. Original songs built to be played loud and played live — new Single <em>Talking Eye To Eye</em> out now.</p>
@@ -345,36 +311,65 @@
 
 <section id="music">
   <div class="listen">
-    <div class="listen-art"></div>
+    <div class="listen-media">
+      <img class="listen-art" src="assets/1000276589.png" alt="All Tied Up album artwork">
+      <div class="player">
+        <audio id="music-audio" preload="none"></audio>
+        <div class="player-controls" aria-label="Music player controls">
+          <button id="player-previous" type="button" aria-label="Previous track">Prev</button>
+          <button id="player-toggle" type="button" aria-label="Play">Play</button>
+          <button id="player-next" type="button" aria-label="Next track">Next</button>
+        </div>
+        <p id="player-status" class="player-status" role="status" aria-live="polite">Talking eye to eye</p>
+      </div>
+    </div>
     <div class="listen-copy">
       <p class="tag">Original Music</p>
-      <h3>Afterglow EP</h3>
-      <p>Five original tracks written and recorded by the band — no covers, no filler. Stream it below or find us on your platform of choice.</p>
+      <h3>All Tied Up</h3>
+      <p>Our new single <em>Talking Eye To Eye</em> is out now. The rest of the record is on the way — stream the single below and stay tuned.</p>
       <div class="track-list">
-        <div class="track">
+        <!-- Released -->
+        <a class="track track-link" href="#" aria-label="Play Talking eye to eye">
           <span class="track-num mono">01</span>
-          <div><div class="track-name">Afterglow</div><div class="track-sub">Original · ELXR On Stage</div></div>
-          <span class="track-time mono">3:42</span>
-        </div>
-        <div class="track">
+          <div><div class="track-name">Talking eye to eye</div><div class="track-sub">Original · ELXR On Stage</div></div>
+          <span class="track-status mono out">Out now</span>
+        </a>
+
+        <!-- Not released yet -->
+        <div class="track soon" aria-disabled="true">
           <span class="track-num mono">02</span>
-          <div><div class="track-name">Static Bloom</div><div class="track-sub">Original · ELXR On Stage</div></div>
-          <span class="track-time mono">4:05</span>
+          <div><div class="track-name">Just U</div><div class="track-sub">Coming soon</div></div>
+          <span class="track-status mono">Soon</span>
         </div>
-        <div class="track">
+        <div class="track soon" aria-disabled="true">
           <span class="track-num mono">03</span>
-          <div><div class="track-name">Low Tide</div><div class="track-sub">Original · ELXR On Stage</div></div>
-          <span class="track-time mono">3:18</span>
+          <div><div class="track-name">Tinkerbell</div><div class="track-sub">Coming soon</div></div>
+          <span class="track-status mono">Soon</span>
         </div>
-        <div class="track">
+        <div class="track soon" aria-disabled="true">
           <span class="track-num mono">04</span>
-          <div><div class="track-name">Halfway Gone</div><div class="track-sub">Original · ELXR On Stage</div></div>
-          <span class="track-time mono">3:56</span>
+          <div><div class="track-name">TBD</div><div class="track-sub">Coming soon</div></div>
+          <span class="track-status mono">Soon</span>
         </div>
-        <div class="track">
+        <div class="track soon" aria-disabled="true">
           <span class="track-num mono">05</span>
-          <div><div class="track-name">Afterglow (Reprise)</div><div class="track-sub">Original · ELXR On Stage</div></div>
-          <span class="track-time mono">2:21</span>
+          <div><div class="track-name">Maybe I’m invincible</div><div class="track-sub">Coming soon</div></div>
+          <span class="track-status mono">Soon</span>
+        </div>
+        <div class="track soon" aria-disabled="true">
+          <span class="track-num mono">06</span>
+          <div><div class="track-name">Summer sucks</div><div class="track-sub">Coming soon</div></div>
+          <span class="track-status mono">Soon</span>
+        </div>
+        <div class="track soon" aria-disabled="true">
+          <span class="track-num mono">07</span>
+          <div><div class="track-name">Love ballad</div><div class="track-sub">Coming soon</div></div>
+          <span class="track-status mono">Soon</span>
+        </div>
+        <div class="track soon" aria-disabled="true">
+          <span class="track-num mono">08</span>
+          <div><div class="track-name">Bring it on</div><div class="track-sub">Coming soon</div></div>
+          <span class="track-status mono">Soon</span>
         </div>
       </div>
       <div class="platforms">
@@ -397,21 +392,21 @@
   <div class="band-grid">
     <div class="member">
       <div class="member-photo" data-initial="R"></div>
-      <h3>Ren Okafor</h3>
-      <p class="role">Vocals / Guitar</p>
-      <p class="bio">Writes most of the lyrics, sings lead, and keeps the setlists honest.</p>
+      <h3>Clerasan G Fernandez</h3>
+      <p class="role"> Keybordist </p>
+      <p class="bio"></p>
     </div>
     <div class="member">
       <div class="member-photo" data-initial="M"></div>
-      <h3>Marisol Vega</h3>
+      <h3>Zuriel D DSouza</h3>
       <p class="role">Lead Guitar</p>
       <p class="bio">Brings the hooks and the harder edges — the one you watch during solos.</p>
     </div>
     <div class="member">
       <div class="member-photo" data-initial="D"></div>
-      <h3>Devon Ashcroft</h3>
-      <p class="role">Bass / Drums</p>
-      <p class="bio">Holds the low end down, keeps time, and books half the gigs.</p>
+      <h3>Judah D DSouza</h3>
+      <p class="role">Drums</p>
+      <p class="bio">Ends the show with a bang — liaterally.</p>
     </div>
   </div>
 </section>
@@ -434,7 +429,7 @@
     <div class="gallery-item"><div class="fill"></div><div class="gallery-caption">On the road</div></div>
   </div>
 </section>
-
+<!--
 <section id="gigs">
   <div class="section-head">
     <div>
@@ -464,7 +459,7 @@
     </div>
   </div>
 </section>
-
+-->
 <div class="radio">
   <div>
     <p class="tag mono" style="color:var(--paper); opacity:0.7;">Behind The Sound</p>
@@ -510,8 +505,80 @@
 
 <script>
   (function(){
+    var playlist = [
+      {title: "Talking eye to eye", src: "music/talking-eye-to-eye.mp3"}
+    ];
+    var audio = document.getElementById('music-audio');
+    var toggle = document.getElementById('player-toggle');
+    var status = document.getElementById('player-status');
+    var currentTrack = 0;
+
+    function loadTrack(index){
+      currentTrack = (index + playlist.length) % playlist.length;
+      audio.src = playlist[currentTrack].src;
+      status.textContent = playlist[currentTrack].title;
+      toggle.textContent = 'Play';
+      toggle.setAttribute('aria-label', 'Play ' + playlist[currentTrack].title);
+    }
+
+    function playTrack(){
+      audio.play().catch(function(error){
+        console.error('Unable to play audio track:', error);
+        status.textContent = 'Unable to play this track. Check that ' + playlist[currentTrack].src + ' exists.';
+      });
+    }
+
+    toggle.addEventListener('click', function(){
+      if(audio.paused){
+        playTrack();
+      }else{
+        audio.pause();
+      }
+    });
+
+    document.getElementById('player-previous').addEventListener('click', function(){
+      if(audio.currentTime > 3){
+        audio.currentTime = 0;
+        return;
+      }
+      loadTrack(currentTrack - 1);
+      playTrack();
+    });
+
+    document.getElementById('player-next').addEventListener('click', function(){
+      loadTrack(currentTrack + 1);
+      playTrack();
+    });
+
+    audio.addEventListener('play', function(){
+      toggle.textContent = 'Pause';
+      toggle.setAttribute('aria-label', 'Pause ' + playlist[currentTrack].title);
+    });
+    audio.addEventListener('pause', function(){
+      toggle.textContent = 'Play';
+      toggle.setAttribute('aria-label', 'Play ' + playlist[currentTrack].title);
+    });
+    audio.addEventListener('ended', function(){
+      if(playlist.length > 1){
+        loadTrack(currentTrack + 1);
+        playTrack();
+      }
+    });
+    audio.addEventListener('error', function(){
+      status.textContent = 'Unable to load this track. Check that ' + playlist[currentTrack].src + ' exists.';
+    });
+
+    document.querySelector('.track-link').addEventListener('click', function(event){
+      event.preventDefault();
+      loadTrack(0);
+      playTrack();
+    });
+
+    loadTrack(0);
+  })();
+
+  (function(){
     var header = document.getElementById('site-header');
-    var hero = document.getElementById('home');
     var links = Array.prototype.slice.call(document.querySelectorAll('nav a[href^="#"]'));
     var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
     var ticking = false;
@@ -532,10 +599,6 @@
         a.classList.toggle('active', on);
         if(on){ a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
       });
-
-      // white header while it sits over the white landing page, dark everywhere else
-      var overHero = hero.getBoundingClientRect().bottom > header.offsetHeight;
-      header.classList.toggle('on-light', overHero);
 
       // keep the active link visible in the scrolling nav on small screens
       if(current !== lastCurrent){
